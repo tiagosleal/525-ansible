@@ -1,0 +1,19 @@
+- name: Instala o Jenkins
+  hosts: automation
+  tasks:
+  - name: Baixa repo
+    get_url:
+      url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+      dest: /etc/yum.repos.d/jenkins.repo
+
+  - name: Instala chave GPG
+    rpm_key:
+      key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+      state: present
+
+  - name: Instala Jenkins e Java
+    yum:
+      name:
+        - jenkins
+        - java
+      state: present
