@@ -1,0 +1,22 @@
+- name: Instala o Gitlab
+  hosts: devops.dexter.com.br
+  tasks:
+    - name: Instala pacotes necessarios
+      package:
+       name:
+        - ca-certificates
+        - postfix
+        - curl
+        - openssh-server        
+       state: present
+       update_cache: yes 
+
+    - name: Adiciona repositorio Gitlab
+      shell: "curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash"
+
+    - name: Instala Gitlab
+      package:
+       name:
+        - gitlab-ce
+       state: present
+       update_cache: yes   
