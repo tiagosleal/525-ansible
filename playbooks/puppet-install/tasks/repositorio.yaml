@@ -1,0 +1,14 @@
+- name: Instala repositorio do puppet (Ubuntu)
+  apt:
+    deb: https://apt.puppetlabs.com/puppet5-release-xenial.deb
+  when: 
+    - ansible_os_family|lower == 'debian'    
+    - ansible_distribution_release|lower == 'xenial'
+
+- name: Instala repositorio do puppet (EL)
+  yum:
+    name: https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
+    state: present    
+  when: 
+    - ansible_os_family|lower == 'redhat'
+    - ansible_distribution_major_version == "7"

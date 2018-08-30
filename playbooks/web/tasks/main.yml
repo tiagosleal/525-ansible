@@ -1,0 +1,7 @@
+---
+# tasks file for web
+- name: Instala pacotes
+  include: package.yaml
+
+- name: Copia arquivo index.html
+  include: template.yaml

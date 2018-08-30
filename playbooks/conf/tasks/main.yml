@@ -1,0 +1,10 @@
+---
+# tasks file for conf
+- name: Adicionando usuarios padroes
+  include: user.yaml
+
+- name: Adicionando pacotes padroes
+  include: package.yaml
+
+- name: Criando arquivos padroes
+  include: files.yaml

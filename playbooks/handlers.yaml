@@ -1,0 +1,36 @@
+- name: Configurando servidor Web
+  hosts: all
+  tasks:
+    - name: Instalando Apache Debian like
+      package:
+        name: apache2
+      when: ansible_os_family|lower == 'debian'
+
+    - name: Instalando Apache EL like
+      package:
+        name: httpd
+      when: ansible_os_family|lower == 'redhat'      
+
+    - name: Criando a index para o mundo
+      template:
+        src: index.html
+        dest: /var/www/html/index.html
+      notify:
+        - Reinicia apache2 debian
+        - Reinicia httpd el
+
+  handlers:
+    - name: Reinicia apache2 debian
+      service:
+        name: apache2
+        state: restarted
+      when: ansible_os_family|lower == 'debian' 
+
+    - name: Reinicia httpd el
+      service:
+        name: "{{ item.servico }}"
+        state: "{{ item.estado }}"
+      with_items:
+        - "{{ servico: httpd, estado: restarted }}"
+        - "{{ servico: firewalld, estado: stopped }}"
+      when: ansible_os_family|lower == 'redhat'       

@@ -1,0 +1,6 @@
+- name: Instala o puppet
+  hosts: all
+  vars:
+    puppet_server: "devops"
+  roles:
+    - puppet-install

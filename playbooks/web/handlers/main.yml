@@ -1,0 +1,11 @@
+---
+# handlers file for web
+- name: Restarta apache
+  service:
+    name: "{{ 'httpd' if ansible_os_family|lower == 'redhat' else 'apache2' }}"
+    state: restarted
+
+- name: Desativa firewall
+  service:
+    name: firewalld
+    state: stopped

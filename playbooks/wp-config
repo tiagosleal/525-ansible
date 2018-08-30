@@ -1,0 +1,3 @@
+DBNAME={{database_name}}
+DBPASSWORD={{database_passwd}}
+DBHOST={{database_host}}

@@ -1,0 +1,10 @@
+- name: Instalando pacotes adicionais
+  package:
+    name:
+      - figlet
+      - vim
+      - joe
+      - sysstat
+      - htop
+    state: present    
+    update_cache: yes

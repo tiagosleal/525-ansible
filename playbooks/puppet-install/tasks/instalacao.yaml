@@ -1,0 +1,16 @@
+- name: Instala o Puppet agent
+  package:
+    name: puppet-agent
+    state: present
+    update_cache: yes
+  notify:
+    - Sobe puppetagent
+
+- name: Instala o Puppet server
+  package:
+    name: puppetserver
+    state: present
+    update_cache: yes
+  when: ansible_hostname == puppet_server
+  notify:
+    - Sobe puppetserver  

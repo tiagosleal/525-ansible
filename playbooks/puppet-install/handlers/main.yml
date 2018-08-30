@@ -1,0 +1,13 @@
+---
+# handlers file for puppet-install
+- name: Sobe puppetserver
+  service:
+      name: puppetserver
+      state: started
+      enabled: yes
+
+- name: Sobe puppetagent
+  service:
+      name: puppet
+      state: started
+      enabled: yes      

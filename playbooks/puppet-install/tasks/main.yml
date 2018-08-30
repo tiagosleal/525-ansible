@@ -1,0 +1,7 @@
+---
+# tasks file for puppet-install
+- name: Instala repositorios do EL e Ubuntu 
+  include: repositorio.yaml
+
+- name: Instala puppet agent e server
+  include: instalacao.yaml
