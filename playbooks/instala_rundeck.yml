@@ -1,0 +1,17 @@
+- name: Instala Rundeck
+  hosts: automation.dexter.com.br
+  tasks:
+  - name: Instala pacotes
+    yum:
+      name: "{{item.name}}"
+      state: "{{item.state}}"
+    with_items:
+      - {name: java-1.8.0, state: present}
+      - { name: "https://repo.rundeck.org/latest.rpm", state: present }
+      - { name: rundeck, state: present }
+
+  - name: Habilita e sobe servico do Rundeck
+    service:
+      name: rundeckd
+      state: started
+      enabled: yes

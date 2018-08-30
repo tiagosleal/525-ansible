@@ -1,0 +1,21 @@
+- name: Instala Ansible
+  hosts: automation.dexter.com.br
+  tasks:
+  
+  - name: Instala pacote Ansible
+    package:
+      name: ansible
+      state: latest
+    notify:
+      - Copia arquivos
+
+  handlers:
+  - name: Copia arquivos
+    copy: 
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      mode: 0600
+    with_items:
+      - { src: "/etc/ansible/ansible.cfg", dest: "/etc/ansible/ansible.cfg" }
+      - { src: "/etc/ansible/hosts", dest: "/etc/ansible/hosts" }
+      - { src: "/etc/keys/devops.pem", dest: "/etc/keys/devops.pem" }
