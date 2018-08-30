@@ -1,0 +1,9 @@
+- name: Instala Ansible
+  hosts: "{{ host_name }}"
+  tasks:
+  
+  - name: Instala Nginx
+    package:
+      name: nginx
+      state: present
+      update_cache: yes

@@ -1,0 +1,12 @@
+- name: Remove Apache
+  hosts: "{{ host_name }}"
+  tasks:
+  - name: Para servico
+    service:
+      name: apache2
+      state: stopped 
+
+  - name: Remove servico
+    package:
+      name: apache2
+      state: absent
