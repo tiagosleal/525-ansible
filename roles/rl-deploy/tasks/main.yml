@@ -1,0 +1,54 @@
+---
+# tasks file for rl-deploy
+- name: Pega IP do container Green
+  shell: docker exec green hostname -I
+  register: ip_cont_green
+
+- name: Pega IP do container Blue
+  shell: docker exec blue hostname -I
+  register: ip_cont_blue  
+
+- name: Verifica container ativo no nginx
+  shell: grep "{{ip_cont_blue.stdout|trim}}" /etc/nginx/sites-enabled/docker.conf
+  register: checa_blue
+  ignore_errors: yes
+
+- name: Seta container ativo no nginx para o Blue
+  set_fact:
+    ip_container: "{{ ip_cont_blue.stdout|trim }}"
+    container_name: blue
+  when: checa_blue.rc == 1 
+ 
+- name: Seta container ativo no nginx para o Green
+  set_fact:
+    ip_container: "{{ ip_cont_green.stdout|trim }}"
+    container_name: green
+  when: checa_blue.rc == 0 
+
+- name: Copia virtual host do nginx   
+  template:
+    src: templates/docker.j2
+    dest: /etc/nginx/sites-enabled/docker.conf
+  when: ip_container is defined
+
+#- name: Remove projeto anterior
+#  file:
+#    path: /index/
+#    state: absent  
+#  ignore_errors: yes
+
+- name: Copia o projeto do jenkins
+  template:
+    src: /var/lib/jenkins/workspace/deploy/index.j2
+    dest: /index/index.html 
+  ignore_errors: yes
+
+#- name: Restarta container ativo
+#  docker_container:
+#    name: "{{container_name}}"
+#    restart: yes
+
+- name: Reinicia o nginx
+  service:
+    name: nginx
+    state: restarted

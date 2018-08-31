@@ -1,0 +1,21 @@
+---
+# tasks file for rl-prereqs
+- name: Instala pacotes
+  package: 
+    name: 
+      - nginx
+      - docker-ce
+      - python-pip
+      - docker-py
+    state: present
+    update_cache: yes
+  ignore_errors: yes
+
+- name: Sobe servicos
+  service:
+    name: "{{item}}"
+    state: started
+    enabled: yes
+  with_items:
+    - docker
+    - nginx

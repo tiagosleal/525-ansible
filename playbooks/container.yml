@@ -1,0 +1,4 @@
+- name: Instala prereqs para o projeto final
+  hosts: docker
+  roles:
+    - rl-container

@@ -1,0 +1,17 @@
+---
+# tasks file for rl-container
+#- name: Cria volume do docker
+#  docker_volume:
+#    name: vol_docker
+#  ignore_errors: yes
+
+- name: Criando o container
+  docker_container:
+    name: "{{item}}"
+    image: httpd
+    state: started
+    volumes:
+      - /index:/usr/local/apache2/htdocs
+  with_items:
+    - green
+    - blue 
